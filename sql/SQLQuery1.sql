@@ -1,0 +1,1 @@
+﻿SELECT * FROM Groupes ORDER BY Nom;
