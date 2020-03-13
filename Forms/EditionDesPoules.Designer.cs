@@ -73,16 +73,16 @@ namespace Criterium_16_4
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.cbDuree);
             this.groupBox2.Controls.Add(this.cbHeureDebut);
-            this.groupBox2.Location = new System.Drawing.Point(29, 162);
+            this.groupBox2.Location = new System.Drawing.Point(304, 20);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(411, 52);
+            this.groupBox2.Size = new System.Drawing.Size(144, 123);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Heure de début";
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(220, 0);
+            this.label1.Location = new System.Drawing.Point(6, 66);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(121, 18);
             this.label1.TabIndex = 11;
@@ -99,9 +99,9 @@ namespace Criterium_16_4
             "30",
             "35",
             "40"});
-            this.cbDuree.Location = new System.Drawing.Point(220, 19);
+            this.cbDuree.Location = new System.Drawing.Point(6, 87);
             this.cbDuree.Name = "cbDuree";
-            this.cbDuree.Size = new System.Drawing.Size(115, 24);
+            this.cbDuree.Size = new System.Drawing.Size(127, 24);
             this.cbDuree.TabIndex = 12;
             // 
             // cbHeureDebut
@@ -170,14 +170,14 @@ namespace Criterium_16_4
             "18h00"});
             this.cbHeureDebut.Location = new System.Drawing.Point(6, 19);
             this.cbHeureDebut.Name = "cbHeureDebut";
-            this.cbHeureDebut.Size = new System.Drawing.Size(115, 24);
+            this.cbHeureDebut.Size = new System.Drawing.Size(127, 24);
             this.cbHeureDebut.TabIndex = 10;
             // 
             // btEdition
             // 
             this.btEdition.Image = global::Criterium_16_4.Resource1.imprimante_16;
             this.btEdition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btEdition.Location = new System.Drawing.Point(313, 12);
+            this.btEdition.Location = new System.Drawing.Point(19, 169);
             this.btEdition.Name = "btEdition";
             this.btEdition.Size = new System.Drawing.Size(127, 43);
             this.btEdition.TabIndex = 13;
@@ -190,7 +190,7 @@ namespace Criterium_16_4
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancel.Image = global::Criterium_16_4.Resource1.annuler_16;
             this.btCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btCancel.Location = new System.Drawing.Point(313, 79);
+            this.btCancel.Location = new System.Drawing.Point(310, 169);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(127, 43);
             this.btCancel.TabIndex = 14;
@@ -280,7 +280,7 @@ namespace Criterium_16_4
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;
-            this.ClientSize = new System.Drawing.Size(460, 217);
+            this.ClientSize = new System.Drawing.Size(460, 221);
             this.Controls.Add(this.labelPoule4);
             this.Controls.Add(this.cbPoule4);
             this.Controls.Add(this.labelPoule3);
@@ -292,6 +292,7 @@ namespace Criterium_16_4
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btEdition);
             this.Controls.Add(this.groupBox2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

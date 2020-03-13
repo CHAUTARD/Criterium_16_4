@@ -198,11 +198,11 @@
     <Compile Include="Forms\EditionDesPoules.Designer.cs">
       <DependentUpon>EditionDesPoules.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormCompetitionNom.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormCompetitionNom.Designer.cs">
-      <DependentUpon>FormCompetitionNom.cs</DependentUpon>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormParams.cs">
       <SubType>Form</SubType>
@@ -221,12 +221,6 @@
     </Compile>
     <Compile Include="Forms\FormSaisieScore.Designer.cs">
       <DependentUpon>FormSaisieScore.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormStatistique.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormStatistique.Designer.cs">
-      <DependentUpon>FormStatistique.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormTableau.cs">
       <SubType>Form</SubType>
@@ -249,16 +243,18 @@
       <DependentUpon>InputClub.cs</DependentUpon>
     </Compile>
     <Compile Include="LicencePresent.cs" />
-    <Compile Include="Forms\MainForm.cs">
+    <Compile Include="Forms\FormJoueur.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Forms\FormJoueur.Designer.cs">
+      <DependentUpon>FormJoueur.cs</DependentUpon>
     </Compile>
     <Compile Include="Manche.cs" />
     <Compile Include="ManchesPoints.cs" />
     <Compile Include="Modeles\Categorie.cs" />
     <Compile Include="Modeles\Club.cs" />
+    <Compile Include="Modeles\Competition.cs" />
+    <Compile Include="Modeles\CompetitionLicence.cs" />
     <Compile Include="Modeles\Division.cs" />
     <Compile Include="Modeles\Groupe.cs" />
     <Compile Include="Modeles\Joueur.cs" />
@@ -284,8 +280,8 @@
     <EmbeddedResource Include="Forms\EditionDesPoules.resx">
       <DependentUpon>EditionDesPoules.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormCompetitionNom.resx">
-      <DependentUpon>FormCompetitionNom.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormParams.resx">
       <DependentUpon>FormParams.cs</DependentUpon>
@@ -296,21 +292,18 @@
     <EmbeddedResource Include="Forms\FormSaisieScore.resx">
       <DependentUpon>FormSaisieScore.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormStatistique.resx">
-      <DependentUpon>FormStatistique.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTableau.resx">
       <DependentUpon>FormTableau.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormTableauSaisie.resx">
-      <DependentUpon>FormTableauSaisie.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InputClub.resx">
       <DependentUpon>InputClub.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FormJoueur.resx">
+      <DependentUpon>FormJoueur.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTableauSaisie.resx">
+      <DependentUpon>FormTableauSaisie.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

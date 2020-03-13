@@ -17,14 +17,10 @@ namespace Criterium_16_4
         public string NumeroClub { get; set; }
         public char Lettre { get; set; }
         public int Ordre { get; set; }
-        public char Poule { get; set; }
-        public int NumInPoule { get; set; }
-        public int Classement { get; set; }
-        public int PartieGagnee { get; set; }
-        public int PartiePerdu { get; set; }
-        public int NombreArbitrage { get; set; }
-        public bool EnCour { get; set; }
-        public bool EnArbitrage { get; set; }
+        public char Poule { get; set; } // A, B, C, D
+        public int NumInPoule { get; set; } // 1, 2, 3, 4
+        public string Tableau { get; set; }    // 
+        public int Classement { get; set; } // 1 .. 16
         public Joueur() 
         {
             IsPresent = false;
@@ -34,26 +30,9 @@ namespace Criterium_16_4
             Dossard = 1;
             Lettre = 'A';
             Poule = 'A';
-            Classement = 1;
-            PartieGagnee = 0;
-            PartiePerdu = 0;
-            NombreArbitrage = 0;
-            EnCour = false;
-            EnArbitrage = false;
+            Classement = 16;
+            Tableau = "";
         }
-
-        public Joueur GetJoueurByLicence(int iLicence)
-        {
-            if (iLicence > 0)
-            {
-                using (var db = new PetaPoco.Database("SqliteConnect"))
-                {
-                    return db.Single<Joueur>(iLicence);
-                }
-            }
-            return null;
-        }
-
 
         [Ignore]
         public Club club { get; set; }

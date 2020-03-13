@@ -37,24 +37,22 @@ namespace Criterium_16_4
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTableau));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Ordre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Club = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tableau = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColLicence = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripValider = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripComboBoxInversion = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonInversion = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAbandon = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStripValider.SuspendLayout();
@@ -68,36 +66,37 @@ namespace Criterium_16_4
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Ordre,
             this.Nom,
             this.Club,
-            this.Tableau});
-            this.dataGridView1.Location = new System.Drawing.Point(7, 70);
+            this.Tableau,
+            this.ColLicence});
+            this.dataGridView1.Location = new System.Drawing.Point(10, 10);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(826, 409);
+            this.dataGridView1.Size = new System.Drawing.Size(769, 381);
             this.dataGridView1.TabIndex = 0;
             // 
             // Ordre
             // 
             this.Ordre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Ordre.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Ordre.DefaultCellStyle = dataGridViewCellStyle2;
             this.Ordre.Frozen = true;
             this.Ordre.HeaderText = "Ordre";
             this.Ordre.MinimumWidth = 30;
@@ -109,9 +108,9 @@ namespace Criterium_16_4
             // Nom
             // 
             this.Nom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Nom.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Nom.DefaultCellStyle = dataGridViewCellStyle3;
             this.Nom.Frozen = true;
             this.Nom.HeaderText = "Nom et Prénom";
             this.Nom.MinimumWidth = 150;
@@ -122,9 +121,9 @@ namespace Criterium_16_4
             // Club
             // 
             this.Club.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Club.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Club.DefaultCellStyle = dataGridViewCellStyle4;
             this.Club.Frozen = true;
             this.Club.HeaderText = "Club";
             this.Club.MinimumWidth = 150;
@@ -135,9 +134,9 @@ namespace Criterium_16_4
             // Tableau
             // 
             this.Tableau.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tableau.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Tableau.DefaultCellStyle = dataGridViewCellStyle5;
             this.Tableau.Frozen = true;
             this.Tableau.HeaderText = "Tableau";
             this.Tableau.MinimumWidth = 15;
@@ -146,19 +145,27 @@ namespace Criterium_16_4
             this.Tableau.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Tableau.Width = 91;
             // 
+            // ColLicence
+            // 
+            this.ColLicence.HeaderText = "Licence";
+            this.ColLicence.Name = "ColLicence";
+            this.ColLicence.ReadOnly = true;
+            this.ColLicence.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColLicence.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColLicence.Visible = false;
+            // 
             // toolStripValider
             // 
+            this.toolStripValider.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripValider.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripValider.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripSeparator1,
             this.toolStripComboBoxInversion,
-            this.toolStripSeparator2,
             this.toolStripButtonInversion,
-            this.toolStripSeparator3,
             this.toolStripButtonAbandon});
-            this.toolStripValider.Location = new System.Drawing.Point(0, 0);
+            this.toolStripValider.Location = new System.Drawing.Point(0, 394);
             this.toolStripValider.Name = "toolStripValider";
-            this.toolStripValider.Size = new System.Drawing.Size(841, 71);
+            this.toolStripValider.Size = new System.Drawing.Size(791, 71);
             this.toolStripValider.TabIndex = 1;
             this.toolStripValider.Text = "toolStrip1";
             // 
@@ -175,11 +182,6 @@ namespace Criterium_16_4
             this.toolStripButton1.Text = "Valider";
             this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 71);
-            // 
             // toolStripComboBoxInversion
             // 
             this.toolStripComboBoxInversion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -192,14 +194,10 @@ namespace Criterium_16_4
             "5 et 12",
             "6 et 11",
             "7 et 10"});
+            this.toolStripComboBoxInversion.Margin = new System.Windows.Forms.Padding(200, 0, 1, 0);
             this.toolStripComboBoxInversion.Name = "toolStripComboBoxInversion";
             this.toolStripComboBoxInversion.Size = new System.Drawing.Size(160, 71);
             this.toolStripComboBoxInversion.ToolTipText = "Tirage au sort";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 71);
             // 
             // toolStripButtonInversion
             // 
@@ -213,13 +211,9 @@ namespace Criterium_16_4
             this.toolStripButtonInversion.Text = "Inversion";
             this.toolStripButtonInversion.Click += new System.EventHandler(this.toolStripButtonInversion_Click);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 71);
-            // 
             // toolStripButtonAbandon
             // 
+            this.toolStripButtonAbandon.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripButtonAbandon.AutoSize = false;
             this.toolStripButtonAbandon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStripButtonAbandon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -236,9 +230,10 @@ namespace Criterium_16_4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(841, 491);
+            this.ClientSize = new System.Drawing.Size(791, 465);
             this.Controls.Add(this.toolStripValider);
             this.Controls.Add(this.dataGridView1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -253,15 +248,13 @@ namespace Criterium_16_4
 		}
         private System.Windows.Forms.ToolStrip toolStripValider;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAbandon;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxInversion;
+        private System.Windows.Forms.ToolStripButton toolStripButtonInversion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ordre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nom;
         private System.Windows.Forms.DataGridViewTextBoxColumn Club;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tableau;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxInversion;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonInversion;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColLicence;
     }
 }

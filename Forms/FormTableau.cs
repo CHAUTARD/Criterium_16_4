@@ -46,25 +46,25 @@ namespace Criterium_16_4
 			 * |     4eme   |  7 | 10 | 15 |  2 |
 			 * +------------+----+----+----+----+
 			 */
-			this.dataGridView1.Rows.Add( "1P1", aJoueur1[0].Nom, clubDA.GetNomByNumero(aJoueur1[0].NumeroClub) , "01");
-			this.dataGridView1.Rows.Add( "1P2", aJoueur2[0].Nom, clubDA.GetNomByNumero(aJoueur2[0].NumeroClub) , "16");
-			this.dataGridView1.Rows.Add( "1P3", aJoueur3[0].Nom, clubDA.GetNomByNumero(aJoueur3[0].NumeroClub) , "09");
-			this.dataGridView1.Rows.Add( "1P4", aJoueur4[0].Nom, clubDA.GetNomByNumero(aJoueur4[0].NumeroClub) , "08");
+			dataGridView1.Rows.Add( "1P1", aJoueur1[0].Nom, clubDA.GetNomByNumero(aJoueur1[0].NumeroClub) , "01", aJoueur1[0].Licence.ToString() );
+			dataGridView1.Rows.Add( "1P2", aJoueur2[0].Nom, clubDA.GetNomByNumero(aJoueur2[0].NumeroClub) , "16", aJoueur2[0].Licence.ToString() );
+			dataGridView1.Rows.Add( "1P3", aJoueur3[0].Nom, clubDA.GetNomByNumero(aJoueur3[0].NumeroClub) , "09", aJoueur3[0].Licence.ToString() );
+			dataGridView1.Rows.Add( "1P4", aJoueur4[0].Nom, clubDA.GetNomByNumero(aJoueur4[0].NumeroClub) , "08", aJoueur4[0].Licence.ToString() );
 			
-			this.dataGridView1.Rows.Add( "2P1", aJoueur1[1].Nom, clubDA.GetNomByNumero(aJoueur1[1].NumeroClub) , "13");
-			this.dataGridView1.Rows.Add( "2P2", aJoueur2[1].Nom, clubDA.GetNomByNumero(aJoueur2[1].NumeroClub) , "04");
-			this.dataGridView1.Rows.Add( "2P3", aJoueur3[1].Nom, clubDA.GetNomByNumero(aJoueur3[1].NumeroClub) , "05");
-			this.dataGridView1.Rows.Add( "2P4", aJoueur4[1].Nom, clubDA.GetNomByNumero(aJoueur4[1].NumeroClub) , "12");
+			dataGridView1.Rows.Add( "2P1", aJoueur1[1].Nom, clubDA.GetNomByNumero(aJoueur1[1].NumeroClub) , "13", aJoueur1[1].Licence.ToString() );
+			dataGridView1.Rows.Add( "2P2", aJoueur2[1].Nom, clubDA.GetNomByNumero(aJoueur2[1].NumeroClub) , "04", aJoueur2[1].Licence.ToString() );
+			dataGridView1.Rows.Add( "2P3", aJoueur3[1].Nom, clubDA.GetNomByNumero(aJoueur3[1].NumeroClub) , "05", aJoueur3[1].Licence.ToString() );
+			dataGridView1.Rows.Add( "2P4", aJoueur4[1].Nom, clubDA.GetNomByNumero(aJoueur4[1].NumeroClub) , "12", aJoueur4[1].Licence.ToString() );
 			
-			this.dataGridView1.Rows.Add( "3P1", aJoueur1[2].Nom, clubDA.GetNomByNumero(aJoueur1[2].NumeroClub) , "11");
-			this.dataGridView1.Rows.Add( "3P2", aJoueur2[2].Nom, clubDA.GetNomByNumero(aJoueur2[2].NumeroClub) , "06");
-			this.dataGridView1.Rows.Add( "3P3", aJoueur3[2].Nom, clubDA.GetNomByNumero(aJoueur3[2].NumeroClub) , "03");
-			this.dataGridView1.Rows.Add( "3P4", aJoueur4[2].Nom, clubDA.GetNomByNumero(aJoueur4[2].NumeroClub) , "14");
+			dataGridView1.Rows.Add( "3P1", aJoueur1[2].Nom, clubDA.GetNomByNumero(aJoueur1[2].NumeroClub) , "11", aJoueur1[2].Licence.ToString() );
+			dataGridView1.Rows.Add( "3P2", aJoueur2[2].Nom, clubDA.GetNomByNumero(aJoueur2[2].NumeroClub) , "06", aJoueur2[2].Licence.ToString() );
+			dataGridView1.Rows.Add( "3P3", aJoueur3[2].Nom, clubDA.GetNomByNumero(aJoueur3[2].NumeroClub) , "03", aJoueur3[2].Licence.ToString() );
+			dataGridView1.Rows.Add( "3P4", aJoueur4[2].Nom, clubDA.GetNomByNumero(aJoueur4[2].NumeroClub) , "14", aJoueur4[2].Licence.ToString() );
 			
-			this.dataGridView1.Rows.Add( "4P1", aJoueur1[3].Nom, clubDA.GetNomByNumero(aJoueur1[3].NumeroClub) , "07");
-			this.dataGridView1.Rows.Add( "4P2", aJoueur2[3].Nom, clubDA.GetNomByNumero(aJoueur2[3].NumeroClub) , "10");
-			this.dataGridView1.Rows.Add( "4P3", aJoueur3[3].Nom, clubDA.GetNomByNumero(aJoueur3[3].NumeroClub) , "15");
-			this.dataGridView1.Rows.Add( "4P4", aJoueur4[3].Nom, clubDA.GetNomByNumero(aJoueur4[3].NumeroClub) , "02");
+			dataGridView1.Rows.Add( "4P1", aJoueur1[3].Nom, clubDA.GetNomByNumero(aJoueur1[3].NumeroClub) , "07", aJoueur1[3].Licence.ToString() );
+			dataGridView1.Rows.Add( "4P2", aJoueur2[3].Nom, clubDA.GetNomByNumero(aJoueur2[3].NumeroClub) , "10", aJoueur2[3].Licence.ToString() );
+			dataGridView1.Rows.Add( "4P3", aJoueur3[3].Nom, clubDA.GetNomByNumero(aJoueur3[3].NumeroClub) , "15", aJoueur3[3].Licence.ToString() );
+			dataGridView1.Rows.Add( "4P4", aJoueur4[3].Nom, clubDA.GetNomByNumero(aJoueur4[3].NumeroClub) , "02", aJoueur4[3].Licence.ToString() );
 						
 			// Mise en couleur des cases
 			BackColorCell( 0, 0, Color.LightYellow);
@@ -79,11 +79,11 @@ namespace Criterium_16_4
 			BackColorCell( 7, 0, Color.LightGreen);
 			
 			for(int i=8; i < 16; i++)
-				this.dataGridView1.Rows[i].Cells[0].Style.BackColor = Color.LightCoral;
+				dataGridView1.Rows[i].Cells[0].Style.BackColor = Color.LightCoral;
 		}
 				
 		// Met en couleur la cellule concernée
-		void BackColorCell(int iRow, int iCol, Color color) { this.dataGridView1.Rows[iRow].Cells[iCol].Style.BackColor = color; }
+		void BackColorCell(int iRow, int iCol, Color color) { dataGridView1.Rows[iRow].Cells[iCol].Style.BackColor = color; }
 						
 		// Inverse les valeurs de deux cellulles
 		void inverseValeur(int iv)

@@ -1,387 +1,510 @@
-﻿/*
- * Crée par SharpDevelop.
- * Utilisateur: CHAUTARD
- * Date: 04/02/2020
- * Heure: 08:44
- * 
- * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
- */
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace Criterium_16_4
 {
-    /// <summary>
-    /// Description of FormTableauSaisie.
-    /// </summary>
     public partial class FormTableauSaisie : Form
     {
-        const bool _Debug = true;
-
-        int _iFinale = 8;
-
-        Image _image;
-        Graphics _graphics;
-
-        Font _font = new Font("Times", 10);
-
-        String[] _sName = new String[16];
-        int[] _iName = new int[16];
-
-        // Pas de 130                    0    1    2    3    4     5     6     7      8
-        static readonly int[] _xPos = { 45, 280, 510, 740, 995, 1225, 1470, 1700, 1930 };
-
-        // Position en Y                 0    1    2    3    4    5    6    7    8    9   10   11
-        static readonly int[] _yPos = { 75, 124, 139, 169, 203, 220, 236, 265, 299, 316, 364, 407,
-            460, 508, 524, 555, 587, //    12    13    14    15    16
-			603, 619, 650, 677,     //    17    18    19    20
-			695, 747,				//    21    22 
-			821, 853,				//    23    24
-			885, 917,				//    25    26   
-			1029, 1061,				//    27    28
-			1093, 1107,				//    29    30 
-			1125, 1156, 1189, 1207, // 31   32    33    34
-			1304, 1333, 1365, 1396  // 35   36    37   38
-		};
-
-        static readonly int[,] _aCas = {
-            { 5, 0},		// 1P1
-			{ 3, 0},
-            { 4, 2},
-            { 4, 4},
-            { 4, 6},
-            { 4, 8},
-            { 3, 10},
-            { 5, 10},
-            { 5, 12},
-            { 3, 12},
-            { 4, 14},
-            { 4, 16},
-            { 4, 18},
-            { 4, 20},
-            { 3, 22},
-            { 5, 22},		// 1P2
-
-			{ 5, 3},
-            { 5, 7},
-            { 5, 15},
-            { 5, 19},		// 20
-
-			{ 6, 1},
-            { 6, 9},
-            { 6, 13},
-            { 6, 21},
-
-            { 6, 27},
-            { 6, 29},
-            { 6, 31},
-            { 6, 33},		// 28
-
-			{ 7, 5},
-            { 7, 17},
-            { 7, 23},
-            { 7, 25},
-            { 7, 28},
-            { 7, 32},
-            { 7, 35},
-            { 7, 37},		// 36
-
-			{ 8, 11},
-            { 8, 19},
-            { 8, 24},
-            { 8, 26},
-            { 8, 30},
-            { 8, 34},
-            { 8, 36},
-            { 8, 38},		// 44
-
-			{ 3, 3},
-            { 3, 7},
-            { 3, 15},
-            { 3, 19},		// 48
-
-			{ 2, 1},
-            { 2, 9},
-            { 2, 13},
-            { 2, 21},
-            { 2, 27},
-            { 2, 29},
-            { 2, 31},
-            { 2, 33},		// 56
-
-			{ 1, 5},
-            { 1, 17},
-            { 1, 23},
-            { 1, 25},
-            { 1, 28},
-            { 1, 32},
-            { 1, 35},
-            { 1, 37},		// 64
-
-			{ 0, 11},
-            { 0, 19},
-            { 0, 24},
-            { 0, 26},
-            { 0, 30},
-            { 0, 34},
-            { 0, 36},
-            { 0, 38}		// 72
-	};
-
         public FormTableauSaisie(DataGridView dgv)
         {
-            //
-            // The InitializeComponent() call is required for Windows Forms designer support.
-            //
             InitializeComponent();
 
-            for (int i = 0; i < 16; i++)
+            /*
+             * Parties avec arbitre, calculé pour que les premier de poule arbitre 1 fois de moins que les autres.
+             * 
+             * j1;j2:jA
+             * 
+                3;4;2
+                5;6;7
+                11;12;10
+                13;14;15
+
+                1;4;3
+                5;8;6
+                9;12;11
+                13;16;14
+
+                2;3;1		
+                6;7;4
+                10;11;5
+                14;15;8
+
+                1;8;2
+                9;16;7
+                4;5;10
+                12;13;15
+
+                3;6;9
+                11;14;12
+                2;7;13
+                10;15;16
+
+                1;16;3
+                8;9;6
+                5;12;11
+                4;13;14
+
+                3;14;12
+                6;11;4
+                7;10;5
+                2;15;13
+
+                // 1 seul arbitrage
+                1;8;9;16
+            */
+
+            // 0  
+            dgvParties.Rows.Add("1/8 de Finale", "3-4",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/8 de Finale", "5-6",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/8 de Finale", "11-12", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/8 de Finale", "13-14", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // 4
+            dgvParties.Rows.Add("1/4 de Finale", "1-4",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/4 de Finale", "5-8",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/4 de Finale", "9-12",  "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/4 de Finale", "13-16", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // 8
+            dgvParties.Rows.Add("Places 9 à 16", "2-3",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 9 à 16", "6-7",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 9 à 16", "10-11", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 9 à 16", "14-15", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // 12
+            dgvParties.Rows.Add("1/2 de Finale", "1-8",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("1/2 de Finale", "9-16",  "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            dgvParties.Rows.Add("Places 5 à 8", "4-5",    "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 5 à 8", "12-13",  "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // 16 
+            dgvParties.Rows.Add("Places 9 à 12", "3-6",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 9 à 12", "11-14", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            dgvParties.Rows.Add("Places 13 à 16", "2-7",   "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 13 à 16", "10-15", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // 20
+            dgvParties.Rows.Add("Finale", "1-16", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            dgvParties.Rows.Add("Places 3 à 4", "8-9",  "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 5 à 6", "5-12", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 7 à 8", "4-13", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // 24
+            dgvParties.Rows.Add("Places 9 à 10", "3-14",  "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 11 à 12", "6-11", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 13 à 14", "7-10", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+            dgvParties.Rows.Add("Places 15 à 16", "2-15", "", "", "", "", "", "/", "/", "/", "/", "/", "0", "0", "0");
+
+            // dgv "1P1", aJoueur1[0].Nom, clubDA.GetNomByNumero(aJoueur1[0].NumeroClub), "01", aJoueur1[0].Licence.ToString());
+            // Positionnement des joueurs dans le tableau
+            string sJoueur;
+            string sLicence;
+
+            foreach (DataGridViewRow row in dgv.Rows)
             {
-                _sName[i] = dgv.Rows[i].Cells[1].Value.ToString();
-                _iName[i] = Int32.Parse(dgv.Rows[i].Cells[3].Value.ToString()) - 1;
+                sJoueur = row.Cells[1].Value.ToString();
+                sLicence = row.Cells[4].Value.ToString();
+
+                switch(row.Cells[3].Value.ToString())
+                {
+                    case "01":
+                        dgvParties.Rows[4].Cells["ColJoueur1"].Style.BackColor = Color.LightYellow;
+                        dgvParties.Rows[4].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[4].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrage
+                        dgvParties.Rows[8].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[8].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "02":
+                        dgvParties.Rows[8].Cells["ColJoueur1"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[8].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[8].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[0].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[0].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[12].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[12].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "03":
+                        dgvParties.Rows[0].Cells["ColJoueur1"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[0].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[0].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[4].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[4].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[20].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[20].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "04":
+                        dgvParties.Rows[0].Cells["ColJoueur2"].Style.BackColor = Color.LightGreen;
+                        dgvParties.Rows[0].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[0].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[9].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[9].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[25].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[25].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "05":
+                        dgvParties.Rows[1].Cells["ColJoueur1"].Style.BackColor = Color.LightGreen;
+                        dgvParties.Rows[1].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[1].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[10].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[10].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[26].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[26].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "06":
+                        dgvParties.Rows[1].Cells["ColJoueur2"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[1].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[1].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[5].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[5].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[21].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[21].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "07":
+                        dgvParties.Rows[9].Cells["ColJoueur2"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[9].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[9].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[1].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[1].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[13].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[13].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "08":
+                        dgvParties.Rows[5].Cells["ColJoueur2"].Style.BackColor = Color.LightBlue;
+                        dgvParties.Rows[5].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[5].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrage
+                        dgvParties.Rows[11].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[11].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "09":
+                        dgvParties.Rows[6].Cells["ColJoueur1"].Style.BackColor = Color.LightBlue;
+                        dgvParties.Rows[6].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[6].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrage
+                        dgvParties.Rows[16].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[16].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "10":
+                        dgvParties.Rows[10].Cells["ColJoueur1"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[10].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[10].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[2].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[2].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[14].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[14].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "11":
+                        dgvParties.Rows[2].Cells["ColJoueur1"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[2].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[2].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[6].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[6].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[22].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[22].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "12":
+                        dgvParties.Rows[2].Cells["ColJoueur2"].Style.BackColor = Color.LightGreen;
+                        dgvParties.Rows[2].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[2].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[17].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[17].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[24].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[24].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "13":
+                        dgvParties.Rows[3].Cells["ColJoueur1"].Style.BackColor = Color.LightGreen;
+                        dgvParties.Rows[3].Cells["ColJoueur1"].Value = sJoueur;
+                        dgvParties.Rows[3].Cells["ColLicence1"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[18].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[18].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[27].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[27].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "14":
+                        dgvParties.Rows[3].Cells["ColJoueur2"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[3].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[3].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[7].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[7].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[23].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[23].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "15":
+                        dgvParties.Rows[11].Cells["ColJoueur2"].Style.BackColor = Color.LightCoral;
+                        dgvParties.Rows[11].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[11].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrages
+                        dgvParties.Rows[3].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[3].Cells["ColLicenceA"].Value = sLicence;
+                        dgvParties.Rows[15].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[15].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+
+                    case "16":
+                        dgvParties.Rows[7].Cells["ColJoueur2"].Style.BackColor = Color.LightYellow;
+                        dgvParties.Rows[7].Cells["ColJoueur2"].Value = sJoueur;
+                        dgvParties.Rows[7].Cells["ColLicence2"].Value = sLicence;
+
+                        // Arbitrage
+                        dgvParties.Rows[19].Cells["ColJoueurA"].Value = sJoueur;
+                        dgvParties.Rows[19].Cells["ColLicenceA"].Value = sLicence;
+                        break;
+                }
             }
-
-            _image = new Bitmap(pictureBox1.Image);
-            _graphics = Graphics.FromImage(this._image);
-
-            // Position initiale des 16 joueurs
-            for (int i = 0; i < 72; i++)
-            {
-                if (i < 16)
-                    WriteonImage(_aCas[i, 0], _aCas[i, 1], _iName[i]);
-                else
-                    WriteonImage(_aCas[i, 0], _aCas[i, 1], String.Format("Cas : {0}", i + 1));
-            }
-
-            this.pictureBox1.Image = _image;
         }
 
-        private void WriteonImage(int xPos, int yPos, int iName)
+        private int GetRow(string str)
         {
-            WriteonImage(xPos, yPos, _sName[iName]);
-        }
-
-        private void WriteonImage(int xPos, int yPos, string str)
-        {
-            _graphics.DrawString(str, _font, Brushes.Black, new Point(_xPos[xPos], _yPos[yPos]));
-        }
-
-        void CallSaisieScore(int iPartie)
-        {
-            string[] aPartie = { "3 Contre 4", "5 contre 6", "11 contre 12", "13 contre 14",
-                "1 contre 4", "5 contre 8", "9 contre 12", "13 contre 19",
-                "1 contre 8", "9 contre 16", "1 contre 16", "8 contre 9",
-                "4 contre 5", "12 contre 13", "5 contre 12", "4 contre 13",
-                "2 contre 3", "6 contre 7", "10 contre 11", "14 contre 15",
-                "3 contre 6", "11 contre 14", "3 contre 14",
-                "2 contre 7", "10 contre 15", "7 contre 10", "2 contre 15"
+            string[] Parties = {
+                "3-4", "5-6", "11-12", "13-14",
+                "1-4", "5-8",  "9-12", "13-16",
+                "2-3", "6-7", "10-11", "14-15",
+                "1-8", "9-16",  "4-5", "12-13",
+                "3-6", "11-14", "2-7", "10-15",
+                "1-16",  "8-9", "5-12", "4-13",
+                "3-14", "6-11", "7-10", "2-15"
             };
 
-            // Appel de la Form
-            FormSaisieScore frm = new FormSaisieScore();
+            for (int i =0; i < Parties.Length; i++)
+            {
+                if (str.Equals(Parties[i]))
+                    return i;
 
-            /*
-            frm.SetPartie(dgvScore[0, _iRowactive].Value.ToString());
-            frm.SetForfaitJoueur1(String.Compare(dgvScore[1, _iRowactive].Value.ToString(), "F") == 0);
-            frm.SetAbandonJoueur1(String.Compare(dgvScore[1, _iRowactive].Value.ToString(), "A") == 0);
-            frm.SetJoueur1(dgvScore[2, _iRowactive].Value.ToString());
-            frm.SetJoueur2(dgvScore[3, _iRowactive].Value.ToString());
-            frm.SetForfaitJoueur2(String.Compare(dgvScore[4, _iRowactive].Value.ToString(), "F") == 0);
-            frm.SetAbandonJoueur2(String.Compare(dgvScore[4, _iRowactive].Value.ToString(), "A") == 0);
-            frm.SetScore1(dgvScore[5, _iRowactive].Value.ToString());
-            frm.SetScore2(dgvScore[6, _iRowactive].Value.ToString());
-            frm.SetScore3(dgvScore[7, _iRowactive].Value.ToString());
-            frm.SetScore4(dgvScore[8, _iRowactive].Value.ToString());
-            frm.SetScore5(dgvScore[9, _iRowactive].Value.ToString());
-            */
+            }
+            return -1;
+        }
+
+        private void DispatchResultat(int iRow, bool bAGagne)
+        {
+            string[] Gagne = {
+                 "1-4",  "5-8",  "9-12",  "13-16",
+                 "1-8",  "8-9",  "9-16",  "9-16",
+                 "3-6",  "3-6",  "11-14",  "11-14",
+                 "1-16",  "1-16",  "5-12",  "5-12",
+                 "3-14",  "3-14",  "7-10",  "7-10"
+            };
+
+            string[] Perdu = {
+                "2-3", "6-7", "10-12", "14-15",
+                "4-5", "4-5", "12-13", "12-13",
+                "2-7", "2-7",  "10-15", "10-15",
+                "8-9",  "8-9", "4-13", "4-13",
+                "6-11",  "6-11", "2-15",  "2-15"
+            };
+
+            // Numero de la ligne dans le tableau = "3-4"
+            string sRencontre = dgvParties.Rows[iRow].Cells["ColRencontre"].Value.ToString();
+
+            // sJ[0] = "3";
+            // sJ[1] = "4";
+            string[] sJ = sRencontre.Split('-');
+
+            // 1-4
+            string sGagne = Gagne[iRow];
+
+            // 2-3
+            string sPerdu = Perdu[iRow];
+
+            // Rangée pour gagné et perdu
+            int iRowGagne = GetRow(sGagne);
+            int iRowPerdu = GetRow(sPerdu);
+
+            // Position du joueur dans la nouvelle partie
+
+            // Nom des joueurs A et B
+            string sJoueurA = dgvParties.Rows[iRow].Cells["ColJoueur1"].Value.ToString();
+            string sJoueurB = dgvParties.Rows[iRow].Cells["ColJoueur2"].Value.ToString();
+
+            // A gagne, B perdu
+            if (bAGagne)
+            {
+                if (sGagne.StartsWith(sJ[0] + "-"))
+                    dgvParties.Rows[iRowGagne].Cells["ColJoueur1"].Value = sJoueurA;
+                else
+                    dgvParties.Rows[iRowGagne].Cells["ColJoueur2"].Value = sJoueurA;
+
+                if (sPerdu.StartsWith(sJ[1] + "-"))
+                    dgvParties.Rows[iRowPerdu].Cells["ColJoueur1"].Value = sJoueurB;
+                else
+                    dgvParties.Rows[iRowPerdu].Cells["ColJoueur2"].Value = sJoueurB;
+            }
+            else
+            // A perdu, B gagne
+            {
+                if (sGagne.StartsWith(sJ[1] + "-"))
+                    dgvParties.Rows[iRowGagne].Cells["ColJoueur1"].Value = sJoueurB;
+                else
+                    dgvParties.Rows[iRowGagne].Cells["ColJoueur2"].Value = sJoueurB;
+
+                if (sPerdu.StartsWith(sJ[0] + "-"))
+                    dgvParties.Rows[iRowPerdu].Cells["ColJoueur1"].Value = sJoueurA;
+                else
+                    dgvParties.Rows[iRowPerdu].Cells["ColJoueur2"].Value = sJoueurA;
+            }
+        }
+
+        private void dgvParties_SelectionChanged(object sender, EventArgs e)
+        {
+            // Regarder si les deux joueurs sont inscript dans la liste
+            if (dgvParties.Rows.GetRowCount(DataGridViewElementStates.Selected) > 0)
+            {
+                int iRow = dgvParties.SelectedRows[0].Index;
+
+                if (dgvParties.Rows[iRow].Cells["ColJoueur1"].Value.ToString() == "" || dgvParties.Rows[iRow].Cells["ColJoueur2"].Value.ToString() == "")
+                {
+                    dgvParties.ClearSelection();
+                }
+                else
+                {
+                    // Saisir la partie
+                    CallSaisieScore(iRow);
+                }
+            }
+        }
+
+        void CallSaisieScore(int iRow)
+        {
+            // Vérification si la ligne et bien une ligne de partie
+            if (dgvParties.Rows[iRow].Cells["ColJoueur1"].Value.ToString() == "")
+                return;
+
+            if (dgvParties.Rows[iRow].Cells["ColJoueur2"].Value.ToString() == "")
+                return;
+
+            // Appel de la Form
+            Partie partie = new Partie();
+
+            partie.sPartie = dgvParties.Rows[iRow].Cells["ColRencontre"].Value.ToString();
+            partie.Forfait1 = "F".Equals(dgvParties.Rows[iRow].Cells["ColFA1"].Value.ToString());
+            partie.Abandon1 = "A".Equals(dgvParties.Rows[iRow].Cells["ColFA1"].Value.ToString());
+
+            partie.SetLicence1(int.Parse(dgvParties.Rows[iRow].Cells["ColLicence1"].Value.ToString()));
+            partie.SetLicence2(int.Parse(dgvParties.Rows[iRow].Cells["ColLicence2"].Value.ToString()));
+            partie.SetLicenceArbitre(int.Parse(dgvParties.Rows[iRow].Cells["ColLicenceA"].Value.ToString()));
+
+            partie.Forfait2 = "F".Equals(dgvParties.Rows[iRow].Cells["ColFA2"].Value.ToString());
+            partie.Abandon2 = "A".Equals(dgvParties.Rows[iRow].Cells["ColFA2"].Value.ToString());
+
+            partie.Score1 = GetDgvScore("ColScore1", iRow);
+            partie.Score2 = GetDgvScore("ColScore2", iRow);
+            partie.Score3 = GetDgvScore("ColScore3", iRow);
+            partie.Score4 = GetDgvScore("ColScore4", iRow);
+            partie.Score5 = GetDgvScore("ColScore5", iRow);
+
+            FormSaisieScore frm = new FormSaisieScore(partie);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
-                /*
                 // Transfert des scores vers la dataGridView
-                bool bJoueur1Forfait = false;
-                bool bJoueur2Forfait = false;
-
-                bool bJoueur1Abandon = false;
-                bool bJoueur2Abandon = false;
                 string str;
 
-                dgvScore[5, _iRowactive].Value = frm.GetScore1();
-                dgvScore[6, _iRowactive].Value = frm.GetScore2();
-                dgvScore[7, _iRowactive].Value = frm.GetScore3();
+                dgvParties.Rows[iRow].Cells["ColScore1"].Value = frm.GetScore1();
+                dgvParties.Rows[iRow].Cells["ColScore2"].Value = frm.GetScore2();
+                dgvParties.Rows[iRow].Cells["ColScore3"].Value = frm.GetScore3();
 
                 str = frm.GetScore4();
                 if (str.Length == 0)
                     str = "/";
-                dgvScore[8, _iRowactive].Value = str;
+                dgvParties.Rows[iRow].Cells["ColScore4"].Value = str;
 
                 str = frm.GetScore5();
                 if (str.Length == 0)
                     str = "/";
-                dgvScore[9, _iRowactive].Value = str;
+                dgvParties.Rows[iRow].Cells["ColScore5"].Value = str;
 
                 // Forfait  joueur1 ou les deux
                 if (frm.GetForfait1())
-                {
-                    dgvScore[1, _iRowactive].Value = "F";
-                    bJoueur1Forfait = true;
-                }
+                    dgvParties.Rows[iRow].Cells["ColFA1"].Value = "F";
 
                 if (frm.GetForfait2())
-                {
-                    dgvScore[4, _iRowactive].Value = "F";
-                    bJoueur2Forfait = true;
-                }
+                    dgvParties.Rows[iRow].Cells["ColFA2"].Value = "F";
 
                 if (frm.GetForfait())
                 {
-                    dgvScore[1, _iRowactive].Value = "F";
-                    dgvScore[4, _iRowactive].Value = "F";
-                    bJoueur1Forfait = true;
-                    bJoueur2Forfait = true;
+                    dgvParties.Rows[iRow].Cells["ColFA1"].Value = "F";
+                    dgvParties.Rows[iRow].Cells["ColFA2"].Value = "F";
                 }
 
                 // Abandon
                 if (frm.GetAbandon1())
-                {
-                    dgvScore[1, _iRowactive].Value = "A";
-                    bJoueur1Abandon = true;
-                }
+                    dgvParties.Rows[iRow].Cells["ColFA1"].Value = "A";
 
                 if (frm.GetAbandon2())
-                {
-                    dgvScore[4, _iRowactive].Value = "A";
-                    bJoueur2Abandon = true;
-                }
+                    dgvParties.Rows[iRow].Cells["ColFA2"].Value = "A";
 
                 if (frm.GetAbandon())
                 {
-                    dgvScore[1, _iRowactive].Value = "A";
-                    dgvScore[4, _iRowactive].Value = "A";
-                    bJoueur1Abandon = true;
-                    bJoueur2Abandon = true;
+                    dgvParties.Rows[iRow].Cells["ColFA1"].Value = "A";
+                    dgvParties.Rows[iRow].Cells["ColFA2"].Value = "A";
                 }
 
-                bool bB = true;
-                int icc = 10;
+                // Grise toute la ligne
+                for(int c =0; c < dgvParties.Rows[iRow].Cells.Count; c++)
+                    dgvParties.Rows[iRow].Cells[c].Style.BackColor = Color.LightGray;
 
-                // Joueur2 gagne mettre a jour 10 à 13
+                // Joueur2 gagne mettre a jour
                 if (frm.GetMancheNegative() == 3)
                 {
-                    // Premier = 0 ou 1
-                    while (icc <= 13)
-                    {
-                        if (dgvScore.Rows[_iRowactive].Cells[icc].Style.BackColor != Color.Gray)
-                        {
-                            if (bB)
-                            {
-                                if (bJoueur1Forfait || bJoueur1Abandon)
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "0";
-                                else
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "1";
-                                bB = false;
-                            }
-                            else
-                            {
-                                if (bJoueur2Forfait || bJoueur2Abandon)
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "0";
-                                else
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "2";
-                                icc = 99;
-                            }
-                        }
-                        icc++;
-                    }
+                    DispatchResultat( iRow, false);
                 }
                 else
                 {
-                    // Deuxieme 0 ou 1
-                    while (icc <= 13)
-                    {
-                        if (dgvScore.Rows[_iRowactive].Cells[icc].Style.BackColor != Color.Gray)
-                        {
-                            if (bB)
-                            {
-                                if (bJoueur1Forfait || bJoueur1Abandon)
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "0";
-                                else
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "2";
-                                bB = false;
-                            }
-                            else
-                            {
-                                if (bJoueur2Forfait || bJoueur2Abandon)
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "0";
-                                else
-                                    dgvScore.Rows[_iRowactive].Cells[icc].Value = "1";
-                                icc = 99;
-                            }
-                        }
-                        icc++;
-                    }
+                    DispatchResultat( iRow, true);
                 }
-                */
             }
         }
 
-
-        private void pictureBox1_Click(object sender, System.EventArgs e)
+        int GetDgvScore( string sCol, int iRow)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            Point coordinates = me.Location;
+            if (dgvParties.Rows[iRow].Cells[sCol].Value.ToString() == "/")
+                return SingletonOutils.SCORENULL;
 
-            // Create solid brush.
-            SolidBrush brush = new SolidBrush(Color.FromArgb(128, 0, 0, 200));
-
-            switch (_iFinale)
-            {
-                case 8: // 1/8 de Finale
-                    Rectangle rec = new Rectangle(955, 136, 258, 82);
-                    _graphics.FillRectangle(brush, rec);
-
-                    if (rec.Contains(coordinates))
-                    {
-                        MessageBox.Show("1/8 de Finale : 3 contre 4");
-                    }
-                    else
-                    {
-                        rec = new Rectangle(955, 232, 258, 82);
-                        _graphics.FillRectangle(brush, rec);
-                        if (rec.Contains(coordinates))
-                        {
-                            MessageBox.Show("1/8 de Finale : 5 contre 6");
-                        }
-                        else
-                        {
-                            rec = new Rectangle(955, 520, 258, 82);
-                            _graphics.FillRectangle(brush, rec);
-                            if (rec.Contains(coordinates))
-                            {
-                                MessageBox.Show("1/8 de Finale : 11 contre 12");
-                            }
-                            else
-                            {
-                                rec = new Rectangle(955, 618, 258, 82);
-                                _graphics.FillRectangle(brush, rec);
-                                if (rec.Contains(coordinates))
-                                {
-                                    MessageBox.Show("1/8 de Finale : 3 contre 4");
-                                }
-                                else
-                                {
-                                    MessageBox.Show(String.Format("1/8 (Y) - Mouse : {0}; {1}", coordinates.X, coordinates.Y));
-                                }
-                            }
-                        }
-                    }
-                    pictureBox1.Refresh();
-                    break;
-
-                default:
-                    MessageBox.Show(String.Format("Mouse : {0}; {1}", coordinates.X, coordinates.Y));
-                    break;
-            }
+            return int.Parse(dgvParties.Rows[iRow].Cells[sCol].Value.ToString());
         }
     }
 }

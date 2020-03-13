@@ -1,5 +1,9 @@
+using PetaPoco;
+
 namespace Criterium_16_4
-{   
+{
+    [TableName("Categories")]
+    [PrimaryKey("IdCategorie", AutoIncrement = true)]
     public class Categorie
     {
         public int IdCategorie { get; set; }
@@ -8,7 +12,9 @@ namespace Criterium_16_4
         public string Parent { get; set; }
         public int Ord { get; set; }
 
-        public Categorie() { }
+        public Categorie()
+        {
+        }
 
         public Categorie(string nom, string commentaire, string parent, int ord)
         {

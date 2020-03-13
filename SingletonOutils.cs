@@ -27,11 +27,17 @@ namespace Criterium_16_4
 		// Cellule DataGridView vide
 		public const string CELLVIDE = "--";
 
+		// score non renseigné
+		public const int SCORENULL = 9999;
+
 		// Nom du fichier INI
 		public const string FILEINI = "config.ini";
 
 		// Liste des joueurs prévus
 		public static List<Joueur> ListJoueurs = new List<Joueur>();
+
+		// compétition en cour
+		public static Competition competition = new Competition();
 
 		public static readonly List<PartieQuiJoue> _lPartie31 = new List<PartieQuiJoue>()
 		{
@@ -230,6 +236,19 @@ namespace Criterium_16_4
 				);
 		}
 
+		public static void setTextRapport( RichTextBox txtRapport, string sText, Color color, bool AddNewLine = false)
+		{
+			if (AddNewLine)
+				sText += Environment.NewLine;
+
+			txtRapport.SelectionStart = txtRapport.TextLength;
+			txtRapport.SelectionLength = 0;
+
+			txtRapport.SelectionColor = color;
+			txtRapport.AppendText(sText);
+			txtRapport.SelectionColor = txtRapport.ForeColor;
+		}
+
 		public static void TRUNCATE(string sTableName)
 		{
 			using (var db = new PetaPoco.Database("SqliteConnect"))
@@ -237,6 +256,18 @@ namespace Criterium_16_4
 				db.Execute( string.Format("DELETE FROM {0};", sTableName));
 				db.Execute( string.Format("DELETE FROM sqlite_sequence WHERE name = '{0}'", sTableName));
 			}
+		}
+
+		public static Joueur GetJoueurByLicence(int iLicence)
+		{
+			if (iLicence > 0)
+			{
+				using (var db = new PetaPoco.Database("SqliteConnect"))
+				{
+					return db.Single<Joueur>(iLicence);
+				}
+			}
+			return null;
 		}
 	}
 }

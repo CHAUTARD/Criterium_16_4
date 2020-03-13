@@ -52,13 +52,6 @@ namespace Criterium_16_4
 
             int indexPartie = 0;
 
-            // Vidage de la table
-            using (var db = new PetaPoco.Database("SqliteConnect"))
-            {
-                // initialisation des compteurs pour les joueurs
-                db.Execute("UPDATE Joueurs SET PartieGagnee = 0, PartiePerdu = 0, NombreArbitrage = 0, EnCour = false, EnArbitrage = false;");
-            }
-
             // Parcours des poules à la recherche du nombre de joueur
             for (int iNumPoule = 0; iNumPoule < 4; iNumPoule++)
             {
@@ -403,6 +396,7 @@ namespace Criterium_16_4
             TextRenderer.DrawText(e.Graphics, page.Text, Font, paddedBounds, page.ForeColor);
         }
 
+        #region Grise Cell
         // Grise les cellules points parties non utilisées
         void GrisePointPartie1(DataGridView dgv)
         {
@@ -438,6 +432,7 @@ namespace Criterium_16_4
             dgv.Rows[5].Cells[10].Style.BackColor = Color.Gray; //  "--","--","0","0"
             dgv.Rows[5].Cells[11].Style.BackColor = Color.Gray;
         }
+        #endregion
 
         /* Recherche de l'objet Joueur à partir du nom et prénom de la Grid
 		 * 
@@ -462,23 +457,26 @@ namespace Criterium_16_4
                 return;
 
             // Appel de la Form
-            FormSaisieScore frm = new FormSaisieScore();
+            Partie partie = new Partie();
 
-            frm.partie.sPartie = dgvScore[0, _iRowactive].Value.ToString();
-            frm.partie.Forfait1 = String.Compare(dgvScore[1, _iRowactive].Value.ToString(), "F") != 0;
-            frm.partie.Abandon1 = String.Compare(dgvScore[1, _iRowactive].Value.ToString(), "A") != 0;
+            partie.sPartie = dgvScore[0, _iRowactive].Value.ToString();
+            partie.Forfait1 = String.Compare(dgvScore[1, _iRowactive].Value.ToString(), "F") != 0;
+            partie.Abandon1 = String.Compare(dgvScore[1, _iRowactive].Value.ToString(), "A") != 0;
 
-            frm.partie.Licence1 = Int32.Parse(dgvScore[14, _iRowactive].Value.ToString());
-            frm.partie.Licence2 = Int32.Parse(dgvScore[15, _iRowactive].Value.ToString());
+            partie.SetLicence1(Int32.Parse(dgvScore[14, _iRowactive].Value.ToString()));
+            partie.SetLicence2(Int32.Parse(dgvScore[15, _iRowactive].Value.ToString()));
+            partie.SetLicenceArbitre(Int32.Parse(dgvScore[16, _iRowactive].Value.ToString()));
 
-            frm.partie.Forfait2 = String.Compare(dgvScore[4, _iRowactive].Value.ToString(), "F") != 0;
-            frm.partie.Abandon1 = String.Compare(dgvScore[4, _iRowactive].Value.ToString(), "A") != 0;
+            partie.Forfait2 = String.Compare(dgvScore[4, _iRowactive].Value.ToString(), "F") != 0;
+            partie.Abandon2 = String.Compare(dgvScore[4, _iRowactive].Value.ToString(), "A") != 0;
 
-            frm.partie.Score1 = Int32.Parse(dgvScore[5, _iRowactive].Value.ToString());
-            frm.partie.Score2 = Int32.Parse(dgvScore[6, _iRowactive].Value.ToString());
-            frm.partie.Score3 = Int32.Parse(dgvScore[7, _iRowactive].Value.ToString());
-            frm.partie.Score4 = Int32.Parse(dgvScore[8, _iRowactive].Value.ToString());
-            frm.partie.Score5 = Int32.Parse(dgvScore[9, _iRowactive].Value.ToString());
+            partie.Score1 = GetDgvScore(dgvScore, 5, _iRowactive);
+            partie.Score2 = GetDgvScore(dgvScore, 6, _iRowactive);
+            partie.Score3 = GetDgvScore(dgvScore, 7, _iRowactive);
+            partie.Score4 = GetDgvScore(dgvScore, 8, _iRowactive);
+            partie.Score5 = GetDgvScore(dgvScore, 9, _iRowactive);
+
+            FormSaisieScore frm = new FormSaisieScore(partie);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -607,7 +605,15 @@ namespace Criterium_16_4
             }
         }
 
-        void BtRemplirClick(object sender, EventArgs e)
+        int GetDgvScore(DataGridView dgvScore, int iCol, int iRow)
+        {
+            if (dgvScore[iCol, iRow].Value.ToString() == "/")
+                return SingletonOutils.SCORENULL;
+
+            return Int32.Parse(dgvScore[iCol, iRow].Value.ToString());
+        }
+
+        private void ButtonRemplir_Click(object sender, EventArgs e)
         {
             string str;
             int iManchePerdu;
@@ -792,11 +798,11 @@ namespace Criterium_16_4
                         }
                         break;
                 }
-                btClassement.Enabled = true;
+                BoutonClassement.Enabled = true;
             }
         }
 
-        void BtClassementClick(object sender, EventArgs e)
+        private void BoutonClassement_Click(object sender, EventArgs e)
         {
             // Initialisation des poules
             GerePoule gerePoule1 = new GerePoule('A', txtRapport1, dataGridViewScore1);
@@ -1104,12 +1110,6 @@ namespace Criterium_16_4
             setTextRapport(txtRapport, "+---+---+---+");
         }
 
-        private void btn_statistique_Click(object sender, EventArgs e)
-        {
-            FormStatistique formStatistique = new FormStatistique();
-            formStatistique.Show();
-        }
-
         #region DataGridViewMousseDown
         private void dataGridViewScore1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -1275,6 +1275,7 @@ namespace Criterium_16_4
         }
 
         #endregion
+
         #endregion
     }
 }

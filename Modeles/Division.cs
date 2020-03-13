@@ -1,5 +1,10 @@
+using PetaPoco;
+
 namespace Criterium_16_4
-{   
+{
+    [TableName("Divisions")]
+    [PrimaryKey("IdDivision", AutoIncrement = true)]
+
     public class Division
     {
         public int IdDivision { get; set; }

@@ -60,7 +60,7 @@
             // 
             this.btValid.Image = ((System.Drawing.Image)(resources.GetObject("btValid.Image")));
             this.btValid.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btValid.Location = new System.Drawing.Point(489, 351);
+            this.btValid.Location = new System.Drawing.Point(276, 348);
             this.btValid.Name = "btValid";
             this.btValid.Size = new System.Drawing.Size(140, 81);
             this.btValid.TabIndex = 2;
@@ -102,7 +102,7 @@
             // lbIdParametre
             // 
             this.lbIdParametre.AutoSize = true;
-            this.lbIdParametre.Location = new System.Drawing.Point(276, 351);
+            this.lbIdParametre.Location = new System.Drawing.Point(481, 351);
             this.lbIdParametre.Name = "lbIdParametre";
             this.lbIdParametre.Size = new System.Drawing.Size(64, 13);
             this.lbIdParametre.TabIndex = 6;

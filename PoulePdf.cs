@@ -412,8 +412,11 @@ namespace Criterium_16_4
             }
         }
 
-        public void Joueurs313(string sCompetition)
+        public void Joueurs313()
         {
+            string sCompetition = "XXXXXX";
+            // @TODO
+
             Draw313(sCompetition, 1, 0);
 
             // Ligne séparatrice du milieu de page
@@ -810,8 +813,11 @@ namespace Criterium_16_4
             _gfx.DrawString(joueur.Nom, _font10, XBrushes.Black, _rect, _format);
         }
 
-        public void Joueurs413(string sCompetition)
+        public void Joueurs413()
         {
+            string sCompetition = "XXXX";
+            // @TODO
+
             _gfx = XGraphics.FromPdfPage(_page);
 
             Draw413(sCompetition, 1, 0);

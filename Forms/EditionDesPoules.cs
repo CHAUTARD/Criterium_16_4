@@ -20,7 +20,7 @@ namespace Criterium_16_4
 		string _sEpreuve;
 		DataGridView _dgvPoule;
 		
-		public EditionDesPoules(string sEpreuve, DataGridView dgvPoule)
+		public EditionDesPoules(DataGridView dgvPoule)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
@@ -30,7 +30,8 @@ namespace Criterium_16_4
 			//
 			// Add constructor code after the InitializeComponent() call.
 			//
-			this._sEpreuve = sEpreuve;
+			this._sEpreuve = "XXXXXXX";
+			// @TODO
 			
 			this._dgvPoule = dgvPoule;
 

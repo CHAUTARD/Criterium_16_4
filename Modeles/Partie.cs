@@ -9,9 +9,49 @@ namespace Criterium_16_4
         public int IdPartie { get; set; }
 
         public string sPartie { get; set; }
-        public int Licence1 { get; set; }
-        public int Licence2 { get; set; }
-        public int LicenceArbitre { get; set; }
+
+        private int licence1;
+        private Joueur joueur1;
+
+        public int GetLicence1()
+        {
+            return licence1;
+        }
+
+        public void SetLicence1(int value)
+        {
+            licence1 = value;
+            joueur1 = SingletonOutils.GetJoueurByLicence(licence1);
+        }
+
+        private int licence2;
+        private Joueur joueur2;
+
+        public int GetLicence2()
+        {
+            return licence2;
+        }
+
+        public void SetLicence2(int value)
+        {
+            licence2 = value;
+            joueur2 = SingletonOutils.GetJoueurByLicence(licence2);
+        }
+
+        private int licenceArbitre;
+        private Joueur joueurArbitre; // Arbitre
+
+        public int GetLicenceArbitre()
+        {
+            return licenceArbitre;
+        }
+
+        public void SetLicenceArbitre(int value)
+        {
+            licenceArbitre = value;
+            joueurArbitre = SingletonOutils.GetJoueurByLicence(licenceArbitre);
+        }
+
         public int Score1 { get; set; }
         public int Score2 { get; set; }
         public int Score3 { get; set; }
@@ -36,21 +76,12 @@ namespace Criterium_16_4
         public bool CartonR1 { get; set; }
         public bool CartonR2 { get; set; }
 
-        private Joueur joueur1;
-        private Joueur joueur2;
-        private Joueur joueurArbitre; // Arbitre
-
         public Partie(string spartie, int licence1 = 0, int licence2 = 0, int licenceArbitre = 0)
         {
             sPartie = spartie;
-            Licence1 = licence1;
-            Licence2 = licence2;
-            LicenceArbitre = licenceArbitre;
-
-            Joueur joueur = new Joueur();
-            SetJoueur1(joueur.GetJoueurByLicence(licence1));
-            SetJoueur2(joueur.GetJoueurByLicence(licence2));
-            SetJoueurArbitre(joueur.GetJoueurByLicence(licenceArbitre));
+            SetLicence1(licence1);
+            SetLicence2(licence2);
+            SetLicenceArbitre(licenceArbitre);
         }
 
         public Partie(int idPartie, string spartie, int licence1, int licence2, int licenceArbitre, 
@@ -60,9 +91,9 @@ namespace Criterium_16_4
         {
             IdPartie = idPartie;
             sPartie = spartie;
-            Licence1 = licence1;
-            Licence2 = licence2;
-            LicenceArbitre = licenceArbitre;
+            SetLicence1(licence1);
+            SetLicence2(licence2);
+            SetLicenceArbitre(licenceArbitre);
             Score1 = score1;
             Score2 = score2;
             Score3 = score3;
@@ -78,12 +109,6 @@ namespace Criterium_16_4
             CartonO2 = cartonO2;
             CartonR1 = cartonR1;
             CartonR2 = cartonR2;
-
-            Joueur joueur = new Joueur();
-
-            SetJoueur1(joueur.GetJoueurByLicence(licence1));
-            SetJoueur2(joueur.GetJoueurByLicence(licence2));
-            SetJoueurArbitre(joueur.GetJoueurByLicence(licenceArbitre));
         }
 
         public Partie()
@@ -98,7 +123,7 @@ namespace Criterium_16_4
         public void SetJoueur1(Joueur value)
         {
             joueur1 = value;
-            Licence1 = value.Licence;
+            SetLicence1(value.Licence);
         }
 
         public Joueur GetJoueur2()
@@ -109,7 +134,7 @@ namespace Criterium_16_4
         public void SetJoueur2(Joueur value)
         {
             joueur2 = value;
-            Licence2 = value.Licence;
+            SetLicence2(value.Licence);
         }
 
         public Joueur GetJoueurArbitre()
@@ -120,7 +145,7 @@ namespace Criterium_16_4
         public void SetJoueurArbitre(Joueur value)
         {
             joueurArbitre = value;
-            LicenceArbitre = value.Licence;
+            SetLicenceArbitre(value.Licence);
         }
     }
 }

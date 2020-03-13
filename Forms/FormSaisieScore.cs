@@ -1,10 +1,9 @@
 ﻿/*
- * Created by SharpDevelop.
  * User: CHAUTARD
  * Date: 11/11/2019
- * Time: 17:00
  */
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Criterium_16_4
@@ -14,9 +13,9 @@ namespace Criterium_16_4
 	/// </summary>
 	public partial class FormSaisieScore : Form
 	{
-		public Partie partie { get; set; }
+		Partie _partie = new Partie();
 
-		public FormSaisieScore()
+		public FormSaisieScore(Partie partie)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
@@ -26,57 +25,46 @@ namespace Criterium_16_4
 			//
 			// Add constructor code after the InitializeComponent() call.
 			//
-			partie = new Partie();
-		}
+			_partie = partie;
 
-		public void SetPartie(string str) { lbPartie.Text = str; }
-		public void SetJoueur1(string str) { lbJoueur1.Text = str; }
-		public void SetJoueur2(string str) { lbJoueur2.Text = str; }
+			lbPartie.Text = partie.sPartie;
 
-		public void SetForfaitNeant(bool b = true) { rbForfaitNeant.Checked = b; }
-		public void SetForfaitJoueur1(bool b = true) { rbForfaitJoueur1.Checked = b; }
-		public void SetForfaitJoueur2(bool b = true) {
-			if (rbForfaitJoueur1.Checked && b)
-				rbForfaitLes2.Checked = b;
+			// Affichage des joueurs et de l'arbitre
+			SingletonOutils.setTextRapport(lbJoueurs, partie.GetJoueur1().Nom, Color.Blue);
+			SingletonOutils.setTextRapport(lbJoueurs, " contre ", Color.Black);
+			SingletonOutils.setTextRapport(lbJoueurs, partie.GetJoueur2().Nom, Color.Blue);
+
+			// Centrer le texte
+			lbJoueurs.SelectAll();
+			lbJoueurs.SelectionAlignment = HorizontalAlignment.Center;
+
+			rbForfaitNeant.Checked = true;
+
+			if (partie.Forfait1 && partie.Forfait2)
+				rbForfaitLes2.Checked = true;
 			else
-				rbForfaitJoueur2.Checked = b;
-		}
+			{
+				if (partie.Forfait1)
+					rbForfaitJoueur1.Checked = true;
 
-		public void SetAbandonNeant(bool b = true) { rbAbandonNeant.Checked = b; }
+				if (partie.Forfait2)
+					rbForfaitJoueur2.Checked = true;
+			}
 
-		public void SetAbandonJoueur1(bool b = true) { rbAbandonJoueur1.Checked = b; }
-
-		public void SetAbandonJoueur2(bool b = true) {
-			if (rbAbandonJoueur1.Checked && b)
-				rbAbandonLes2.Checked = b;
+			rbAbandonNeant.Checked = true;
+			if (partie.Abandon1 && partie.Abandon2)
+				rbAbandonLes2.Checked = true;
 			else
-				rbAbandonJoueur2.Checked = b;
-		}
+			{
+				if (partie.Abandon1)
+					rbAbandonJoueur1.Checked = true;
 
-		public void SetScore1(string str)
-		{
-			if (str.CompareTo("/") == 0) str = "";
-			tbScore1.Text = str;
-		}
-		public void SetScore2(string str)
-		{
-			if (str.CompareTo("/") == 0) str = "";
-			tbScore2.Text = str;
-		}
-		public void SetScore3(string str)
-		{
-			if (str.CompareTo("/") == 0) str = "";
-			tbScore3.Text = str;
-		}
-		public void SetScore4(string str)
-		{
-			if (str.CompareTo("/") == 0) str = "";
-			tbScore4.Text = str;
-		}
-		public void SetScore5(string str)
-		{
-			if (str.CompareTo("/") == 0) str = "";
-			tbScore5.Text = str;
+				if (partie.Forfait2)
+					rbAbandonJoueur2.Checked = true;
+			}
+
+			// Initialisation des scores
+			ClearScore();
 		}
 
 		void TbScore1KeyPress(object sender, KeyPressEventArgs e) { e.Handled = GoodChar(tbScore1.Text, e); }
@@ -147,6 +135,7 @@ namespace Criterium_16_4
 			tbScore5.Text = FormatScore(tbScore5.Text);
 
 			CompleteScore();
+
 			DialogResult = DialogResult.OK;
 
 			Close();
@@ -158,13 +147,13 @@ namespace Criterium_16_4
 			// Nombre de valeur négative
 			int iN = 0;
 
-			if (tbScore1.Text.Length > 0 && Int32.Parse(tbScore1.Text) < 0) iN++;
-			if (tbScore2.Text.Length > 0 && Int32.Parse(tbScore2.Text) < 0) iN++;
+			if (tbScore1.Text.Length > 0 && int.Parse(tbScore1.Text) < 0) iN++;
+			if (tbScore2.Text.Length > 0 && int.Parse(tbScore2.Text) < 0) iN++;
 			try
 			{
-				if (tbScore3.Text.Length > 0 && Int32.Parse(tbScore3.Text) < 0) iN++;
-				if (tbScore4.Text.Length > 0 && Int32.Parse(tbScore4.Text) < 0) iN++;
-				if (tbScore5.Text.Length > 0 && Int32.Parse(tbScore5.Text) < 0) iN++;
+				if (tbScore3.Text.Length > 0 && int.Parse(tbScore3.Text) < 0) iN++;
+				if (tbScore4.Text.Length > 0 && int.Parse(tbScore4.Text) < 0) iN++;
+				if (tbScore5.Text.Length > 0 && int.Parse(tbScore5.Text) < 0) iN++;
 			}
 			catch
 			{ }
@@ -185,10 +174,17 @@ namespace Criterium_16_4
 
 		// Mise en forme du résultat sur deux caractères
 		string FormatScore(string str) {
+			int s;
+
 			if (str.Length == 0)
 				return "00";
 
-			return String.Format("{0:00}", Int32.Parse(str));
+			// Un score supérieur à 31 est trés rare !
+			s = int.Parse(str);
+			if (s > 31 || s < -31)
+				MessageBox.Show("Le score me semble élevé !", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+
+			return String.Format("{0:00}", s);
 		}
 
 		void CompleteScore()
@@ -251,15 +247,40 @@ namespace Criterium_16_4
 
 		void BtClearClick(object sender, EventArgs e)
 		{
-			tbScore1.Text = "";
-			tbScore2.Text = "";
-			tbScore3.Text = "";
-			tbScore4.Text = "";
-			tbScore5.Text = "";
+			ClearScore();
+		}
+
+		// Initialisation des scores
+		void ClearScore()
+		{
+			tbScore1.Text = _partie.Score1 == SingletonOutils.SCORENULL ? "" : string.Format("{0:00;-00", _partie.Score1);
+			tbScore2.Text = _partie.Score2 == SingletonOutils.SCORENULL ? "" : string.Format("{0:00;-00", _partie.Score2);
+			tbScore3.Text = _partie.Score3 == SingletonOutils.SCORENULL ? "" : string.Format("{0:00;-00", _partie.Score3);
+			tbScore4.Text = _partie.Score4 == SingletonOutils.SCORENULL ? "" : string.Format("{0:00;-00", _partie.Score4);
+			tbScore5.Text = _partie.Score5 == SingletonOutils.SCORENULL ? "" : string.Format("{0:00;-00", _partie.Score5);
+
+			tbScore2.Enabled = false;
+			tbScore3.Enabled = false;
+			tbScore4.Enabled = false;
+			tbScore5.Enabled = false;
 		}
 
 		void BtValiderClick(object sender, EventArgs e) {
+
 			CompleteScore();
+
+			// Remplir les colonnes dans joueur pour la partie
+			// Modification de la table arbitrage
+			using (var db = new PetaPoco.Database("SqliteConnect"))
+			{
+				db.BeginTransaction();
+
+				db.Execute("UPDATE Joueurs SET EnCour = 0 WHERE Licence = @0", _partie.GetJoueur1().Licence);
+				db.Execute("UPDATE Joueurs SET EnCour = 0 WHERE Licence = @0", _partie.GetJoueur2().Licence);
+				db.Execute("UPDATE Joueurs SET EnArbitrage = 0 WHERE Licence = @0", _partie.GetJoueurArbitre().Licence);
+
+				db.CompleteTransaction();
+			}
 			Close();
 		}
 

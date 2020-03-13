@@ -15,9 +15,6 @@ namespace Criterium_16_4
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.Label lbPartie;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label lbJoueur1;
-		private System.Windows.Forms.Label lbJoueur2;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.RadioButton rbForfaitLes2;
 		private System.Windows.Forms.RadioButton rbForfaitJoueur2;
@@ -67,9 +64,6 @@ namespace Criterium_16_4
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSaisieScore));
             this.lbPartie = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lbJoueur1 = new System.Windows.Forms.Label();
-            this.lbJoueur2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbForfaitLes2 = new System.Windows.Forms.RadioButton();
             this.rbForfaitJoueur2 = new System.Windows.Forms.RadioButton();
@@ -95,6 +89,7 @@ namespace Criterium_16_4
             this.btClear = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.btValider = new System.Windows.Forms.Button();
+            this.lbJoueurs = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -109,33 +104,6 @@ namespace Criterium_16_4
             this.lbPartie.TabIndex = 0;
             this.lbPartie.Text = "Partie : 1 - 4";
             this.lbPartie.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(278, 43);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 23);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Contre";
-            // 
-            // lbJoueur1
-            // 
-            this.lbJoueur1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbJoueur1.Location = new System.Drawing.Point(13, 43);
-            this.lbJoueur1.Name = "lbJoueur1";
-            this.lbJoueur1.Size = new System.Drawing.Size(259, 23);
-            this.lbJoueur1.TabIndex = 2;
-            this.lbJoueur1.Text = "Nom joueur 1";
-            // 
-            // lbJoueur2
-            // 
-            this.lbJoueur2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbJoueur2.Location = new System.Drawing.Point(341, 43);
-            this.lbJoueur2.Name = "lbJoueur2";
-            this.lbJoueur2.Size = new System.Drawing.Size(278, 23);
-            this.lbJoueur2.TabIndex = 3;
-            this.lbJoueur2.Text = "Nom joueur 2";
             // 
             // groupBox1
             // 
@@ -389,7 +357,7 @@ namespace Criterium_16_4
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancel.Image = global::Criterium_16_4.Resource1.abandon;
             this.btCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btCancel.Location = new System.Drawing.Point(13, 350);
+            this.btCancel.Location = new System.Drawing.Point(476, 354);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(142, 45);
             this.btCancel.TabIndex = 10;
@@ -400,15 +368,27 @@ namespace Criterium_16_4
             // btValider
             // 
             this.btValider.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btValider.Enabled = false;
             this.btValider.Image = global::Criterium_16_4.Resource1.validation;
             this.btValider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btValider.Location = new System.Drawing.Point(468, 354);
+            this.btValider.Location = new System.Drawing.Point(16, 354);
             this.btValider.Name = "btValider";
             this.btValider.Size = new System.Drawing.Size(142, 45);
             this.btValider.TabIndex = 11;
             this.btValider.Text = "Valider";
             this.btValider.UseVisualStyleBackColor = true;
             this.btValider.Click += new System.EventHandler(this.BtValiderClick);
+            // 
+            // lbJoueurs
+            // 
+            this.lbJoueurs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbJoueurs.Location = new System.Drawing.Point(12, 35);
+            this.lbJoueurs.Multiline = false;
+            this.lbJoueurs.Name = "lbJoueurs";
+            this.lbJoueurs.ReadOnly = true;
+            this.lbJoueurs.Size = new System.Drawing.Size(607, 42);
+            this.lbJoueurs.TabIndex = 12;
+            this.lbJoueurs.Text = "";
             // 
             // FormSaisieScore
             // 
@@ -418,15 +398,13 @@ namespace Criterium_16_4
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(631, 411);
+            this.Controls.Add(this.lbJoueurs);
             this.Controls.Add(this.btValider);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btClear);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lbJoueur2);
-            this.Controls.Add(this.lbJoueur1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lbPartie);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -441,5 +419,7 @@ namespace Criterium_16_4
             this.ResumeLayout(false);
 
 		}
-	}
+
+        private System.Windows.Forms.RichTextBox lbJoueurs;
+    }
 }

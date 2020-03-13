@@ -21,7 +21,7 @@ namespace Criterium_16_4
 		private	Joueur[] _arJoueur = new Joueur[ SingletonOutils.NBRJOUEUR ];
 		
 		// Classe main
-		MainForm _mainForm;
+		FormJoueur _ParentForm;
 		
 		// Tableau de joueur
 		private List<Joueur> _localJoueurs = new List<Joueur>();
@@ -146,10 +146,10 @@ namespace Criterium_16_4
 			{ 8, 9, 10, 11 }  // 12 - 8, 13 - 9, 14 - 10, 15 - 11
 		};
 		
-		public PlaceJoueurs( MainForm mainForm, bool bOrdonnePoule)
+		public PlaceJoueurs( FormJoueur formJoueur, bool bOrdonnePoule)
 		{
 			//* Classe MainForm
-			this._mainForm = mainForm;
+			this._ParentForm = formJoueur;
 			
 			// Copie locale de la liste des présent seulement
 			foreach( Joueur j in SingletonOutils.ListJoueurs)
@@ -234,7 +234,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 2 joueurs sur la ligne 2.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 2 joueurs sur la ligne 2.", true);
 				
 				_arJoueur[4] = _localJoueurs[ 4 ];
 				_arJoueur[5] = _localJoueurs[ 5 ];
@@ -266,7 +266,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 2.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 2.", true);
 				_arJoueur[4] = _localJoueurs[ 4 ];
 				_arJoueur[5] = _localJoueurs[ 5 ];
 				_arJoueur[6] = _localJoueurs[ 6 ];
@@ -300,7 +300,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 4 joueurs sur la ligne 2.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 4 joueurs sur la ligne 2.", true);
 				
 				_arJoueur[4] = _localJoueurs[ 4 ];
 				_arJoueur[5] = _localJoueurs[ 5 ];
@@ -363,7 +363,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 3.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 3.", true);
 
 				_arJoueur[8] = _localJoueurs[ 8 ];
 				_arJoueur[9] = _localJoueurs[ 9 ];
@@ -395,7 +395,7 @@ namespace Criterium_16_4
 
 			// Si impossible, cas par defaut
 			if( boucle ) {
-				this._mainForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 3.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 3.", true);
 
 				_arJoueur[8] = _localJoueurs[ 8 ];
 				_arJoueur[9] = _localJoueurs[ 9 ];
@@ -432,7 +432,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 4 joueurs sur la ligne 3.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 4 joueurs sur la ligne 3.", true);
 
 				_arJoueur[8] = _localJoueurs[ 8 ];
 				_arJoueur[9] = _localJoueurs[ 9 ];
@@ -497,7 +497,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 4.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 4.", true);
 
 				_arJoueur[12] = _localJoueurs[ 12 ];
 				_arJoueur[13] = _localJoueurs[ 13 ];
@@ -533,7 +533,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 4.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 3 joueurs sur la ligne 4.", true);
 
 				_arJoueur[12] = _localJoueurs[ 12 ];
 				_arJoueur[13] = _localJoueurs[ 13 ];
@@ -574,7 +574,7 @@ namespace Criterium_16_4
 			// Si impossible, cas par defaut
 			if( boucle )
 			{
-				this._mainForm.setTextRapport( "Problème pour le placement des 4 joueurs sur la ligne 4.", true);
+				this._ParentForm.setTextRapport( "Problème pour le placement des 4 joueurs sur la ligne 4.", true);
 
 				_arJoueur[12] = _localJoueurs[ 12 ];
 				_arJoueur[13] = _localJoueurs[ 13 ];
@@ -596,7 +596,7 @@ namespace Criterium_16_4
 		void OrdonnePoule()
 		{		
 			// Si doublon dans les poules
-			this._mainForm.setTextRapport( "Plusieurs joueurs du même club dans les poules.", true);
+			this._ParentForm.setTextRapport( "Plusieurs joueurs du même club dans les poules.", true);
 			
 			// Recherche de la ou des poules concernées
 			if( this._localJoueurs.Count == 16 )

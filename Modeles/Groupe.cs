@@ -1,5 +1,10 @@
+using PetaPoco;
+
 namespace Criterium_16_4
 {
+    [TableName("Groupes")]
+    [PrimaryKey("IdGroupe", AutoIncrement = true)]
+
     public class Groupe
     {     
         public int IdGroupe { get; set; }
@@ -9,7 +14,7 @@ namespace Criterium_16_4
 
         public Groupe(string nom)
         {
-            this.Nom = nom;
+            Nom = nom;
         }
     }
 }
