@@ -91,7 +91,7 @@
             // lbIdCompetition
             // 
             this.lbIdCompetition.AutoSize = true;
-            this.lbIdCompetition.Location = new System.Drawing.Point(618, 16);
+            this.lbIdCompetition.Location = new System.Drawing.Point(804, 0);
             this.lbIdCompetition.Name = "lbIdCompetition";
             this.lbIdCompetition.Size = new System.Drawing.Size(71, 13);
             this.lbIdCompetition.TabIndex = 18;
@@ -103,9 +103,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(429, 23);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 13);
+            this.label6.Size = new System.Drawing.Size(271, 13);
             this.label6.TabIndex = 17;
-            this.label6.Text = "Commentaire :";
+            this.label6.Text = "Commentaire - (Texte mis dans les en-tête des éditions) :";
             // 
             // rtCommentaire
             // 

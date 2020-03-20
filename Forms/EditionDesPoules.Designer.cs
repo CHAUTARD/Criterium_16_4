@@ -175,26 +175,26 @@ namespace Criterium_16_4
             // 
             // btEdition
             // 
-            this.btEdition.Image = global::Criterium_16_4.Resource1.imprimante_16;
-            this.btEdition.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btEdition.Location = new System.Drawing.Point(19, 169);
+            this.btEdition.Image = ((System.Drawing.Image)(resources.GetObject("btEdition.Image")));
+            this.btEdition.Location = new System.Drawing.Point(16, 169);
             this.btEdition.Name = "btEdition";
-            this.btEdition.Size = new System.Drawing.Size(127, 43);
+            this.btEdition.Size = new System.Drawing.Size(150, 92);
             this.btEdition.TabIndex = 13;
             this.btEdition.Text = "Edition";
+            this.btEdition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btEdition.UseVisualStyleBackColor = true;
             this.btEdition.Click += new System.EventHandler(this.BtEditionClick);
             // 
             // btCancel
             // 
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Image = global::Criterium_16_4.Resource1.annuler_16;
-            this.btCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btCancel.Location = new System.Drawing.Point(310, 169);
+            this.btCancel.Image = ((System.Drawing.Image)(resources.GetObject("btCancel.Image")));
+            this.btCancel.Location = new System.Drawing.Point(298, 169);
             this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(127, 43);
+            this.btCancel.Size = new System.Drawing.Size(150, 92);
             this.btCancel.TabIndex = 14;
             this.btCancel.Text = "Abandon";
+            this.btCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btCancel.UseVisualStyleBackColor = true;
             this.btCancel.Click += new System.EventHandler(this.BtCancelClick);
             // 
@@ -280,7 +280,7 @@ namespace Criterium_16_4
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;
-            this.ClientSize = new System.Drawing.Size(460, 221);
+            this.ClientSize = new System.Drawing.Size(460, 269);
             this.Controls.Add(this.labelPoule4);
             this.Controls.Add(this.cbPoule4);
             this.Controls.Add(this.labelPoule3);

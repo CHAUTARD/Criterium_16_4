@@ -3,11 +3,10 @@
 namespace Criterium_16_4
 {
     [TableName("CompetitionsLicences")]
-    [PrimaryKey("IdCompetitionLicence", AutoIncrement = true)]
+    [PrimaryKey("IdCompetition,Licence", AutoIncrement = false)]
 
     class CompetitionLicence
     {
-        public int IdCompetitionLicence { get; set; }
         public int IdCompetition { get; set; }
         public int Licence { get; set; }
 

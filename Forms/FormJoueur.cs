@@ -39,6 +39,10 @@ namespace Criterium_16_4
             //
             // Add constructor code after the InitializeComponent() call.
             //
+
+            // Titre de la fenétre
+            Text = "Mise en poule des joueurs - Version : " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+
             _mainForm = m;
 
             Categorie categorie;
@@ -52,8 +56,7 @@ namespace Criterium_16_4
                     groupe = db.SingleOrDefault<Groupe>(SingletonOutils.competition.IdGroupe);
             }
 
-            lbCompetition.Text = string.Format("{0}/{1}/{2}{3}Tour : {4}", categorie.Nom, division.NomLong, groupe.Nom, Environment.NewLine,
-                SingletonOutils.competition.Tour);
+            lbCompetition.Text = SingletonOutils.competition.Commentaire;
 
             // Création des ligne dans la grid
             for (int i = 0; i < 4; i++)
@@ -99,7 +102,7 @@ namespace Criterium_16_4
 
             for (int i = 0; i <= 15; i++)
             {
-                // Joueur absent
+                // Joueur présent
                 if (aJ[i] != null && aJ[i].IsPresent)
                 {
                     col = aPos[iPos, 0];
@@ -328,8 +331,24 @@ namespace Criterium_16_4
 
                     using (var db = new PetaPoco.Database("SqliteConnect"))
                     {
-                        db.Save("Joueurs", "Licence", joueur);
-                        db.Save("CompetitionsLicences", "IdCompetitionLicence", new CompetitionLicence(SingletonOutils.competition.IdCompetition, joueur.Licence) );
+                        try
+                        {
+                            db.BeginTransaction();
+                            if (db.Exists<Joueur>("Licence=@0 ", joueur.Licence))
+                                db.Update("Joueurs", "Licence", joueur);
+                            else
+                                db.Insert("Joueurs", "Licence", joueur);
+
+                            if (! db.Exists<CompetitionLicence>("IdCompetition=@0 And Licence = @1", SingletonOutils.competition.IdCompetition, joueur.Licence))
+                                db.Insert(new CompetitionLicence(SingletonOutils.competition.IdCompetition, joueur.Licence));
+
+                            db.CompleteTransaction();
+                        }
+                        catch (Exception ex)
+                        {
+                            db.AbortTransaction();
+                            MessageBox.Show(ex.ToString());
+                        }
                     }
 
                     // Sauvegarde du joueur dans la liste
@@ -383,6 +402,11 @@ namespace Criterium_16_4
 
             SingletonOutils.ListJoueurs[r].IsPresent = !b;
 
+            using (var db = new PetaPoco.Database("SqliteConnect"))
+            {
+                db.ExecuteAsync("UPDATE Joueurs SET IsPresent = @0 WHERE Licence = @1;", b ? 0 : 1, SingletonOutils.ListJoueurs[r].Licence);
+            }
+
             // Si aucun présent
             traitementToolStripMenuItem.Enabled = false;
             gestionDesbarragesToolStripMenuItem.Enabled = false;
@@ -405,15 +429,10 @@ namespace Criterium_16_4
             {
                 if (xForm.ShowDialog(this) == DialogResult.OK)
                 {
-
                     // Création d'un nouveau enregistrement
-                    Club club = new Club();
-
                     using (var db = new PetaPoco.Database("SqliteConnect"))
                     {
-                        club.Numero = xForm.getTbnumClub();
-                        club.Nom = xForm.getTbNomClub();
-                        db.Save("Clubs", "IdClub", club);
+                        db.Save("Clubs", "IdClub", new Club( xForm.getTbnumClub(), xForm.getTbNomClub()) );
                     }
 
                     MessageBox.Show("Club ajouter.");
@@ -525,6 +544,7 @@ namespace Criterium_16_4
                         }
                     }
                 }
+
                 // Sauvegarde des présents dans la table
                 using (var db = new PetaPoco.Database("SqliteConnect"))
                 {
@@ -617,7 +637,7 @@ namespace Criterium_16_4
             if (e.RowIndex < 1 || e.ColumnIndex == -1)
                 return;
 
-            // Dé^placement seulement dans la même colonne
+            // Déplacement seulement dans la même colonne
             this.iColMove = e.ColumnIndex;
 
             // dataGridViewPoule.DoDragDrop(dataGridViewPoule[e.ColumnIndex,e.RowIndex].FormattedValue, DragDropEffects.All);
@@ -696,28 +716,40 @@ namespace Criterium_16_4
 
                 using (var db = new PetaPoco.Database("SqliteConnect"))
                 {
-                    db.Save("Categories", "IdCategorie", new Categorie("Vétéran 5", "nés en 1939 et avant", "VÉTÉRANS", 10));
-                    db.Save("Categories", "IdCategorie", new Categorie("Vétéran 4", "du 1er Janvier 1940 au 31 décembre 1949", "VÉTÉRANS", 20));
-                    db.Save("Categories", "IdCategorie", new Categorie("Vétéran 3", "du 1er Janvier 1920 au 31 Décembre 1959", "VÉTÉRANS", 30));
-                    db.Save("Categories", "IdCategorie", new Categorie("Vétéran 2", "du 1er Janvier 1960 au 31 Décembre 1969", "VÉTÉRANS", 40));
-                    db.Save("Categories", "IdCategorie", new Categorie("Vétéran 1", "du 1er Janvier 1970 au 31 Décembre 1979", "VÉTÉRANS", 50));
+                    try
+                    {
+                        db.BeginTransaction();
 
-                    db.Save("Categories", "IdCategorie", new Categorie("Sénior", "du 1er Janvier 1980 au 31 Décembre 2001", "SÉNIORS", 60));
+                        db.Insert("Categories", new Categorie("Vétéran 5", "nés en 1939 et avant", "VÉTÉRANS", 10));
+                        db.Insert("Categories", new Categorie("Vétéran 4", "du 1er Janvier 1940 au 31 décembre 1949", "VÉTÉRANS", 20));
+                        db.Insert("Categories", new Categorie("Vétéran 3", "du 1er Janvier 1920 au 31 Décembre 1959", "VÉTÉRANS", 30));
+                        db.Insert("Categories", new Categorie("Vétéran 2", "du 1er Janvier 1960 au 31 Décembre 1969", "VÉTÉRANS", 40));
+                        db.Insert("Categories", new Categorie("Vétéran 1", "du 1er Janvier 1970 au 31 Décembre 1979", "VÉTÉRANS", 50));
 
-                    db.Save("Categories", "IdCategorie", new Categorie("Junior 3 (« -de 18 ans »)", "nés en 2002", "JUNIORS", 70));
-                    db.Save("Categories", "IdCategorie", new Categorie("Junior 2 (« -de 17 ans »)", "nés en 2003", "JUNIORS", 80));
-                    db.Save("Categories", "IdCategorie", new Categorie("Junior 1 (« -de 16 ans »)", "nés en 2004", "JUNIORS", 90));
+                        db.Insert("Categories", new Categorie("Sénior", "du 1er Janvier 1980 au 31 Décembre 2001", "SÉNIORS", 60));
 
-                    db.Save("Categories", "IdCategorie", new Categorie("Cadet 2 (« -de 15 ans »)", "nés en 2005", "CADETS", 100));
-                    db.Save("Categories", "IdCategorie", new Categorie("Cadet 1 (« -de 14 ans »)", "nés en 2006", "CADETS", 110));
+                        db.Insert("Categories", new Categorie("Junior 3 (« -de 18 ans »)", "nés en 2002", "JUNIORS", 70));
+                        db.Insert("Categories", new Categorie("Junior 2 (« -de 17 ans »)", "nés en 2003", "JUNIORS", 80));
+                        db.Insert("Categories", new Categorie("Junior 1 (« -de 16 ans »)", "nés en 2004", "JUNIORS", 90));
 
-                    db.Save("Categories", "IdCategorie", new Categorie("Minime 2 (« -de 13 ans »)", "nés en 2007", "MINIMES", 120));
-                    db.Save("Categories", "IdCategorie", new Categorie("Minime 1 (« -de 12 ans »)", "nés en 2008", "MINIMES", 130));
+                        db.Insert("Categories", new Categorie("Cadet 2 (« -de 15 ans »)", "nés en 2005", "CADETS", 100));
+                        db.Insert("Categories", new Categorie("Cadet 1 (« -de 14 ans »)", "nés en 2006", "CADETS", 110));
 
-                    db.Save("Categories", "IdCategorie", new Categorie("Benjamin 2 (« -de 11 ans »)", "nés en 2009", "BENJAMINS", 140));
-                    db.Save("Categories", "IdCategorie", new Categorie("Benjamin 1 (« -de 10 ans »)", "nés en 2010", "BENJAMINS", 150));
+                        db.Insert("Categories", new Categorie("Minime 2 (« -de 13 ans »)", "nés en 2007", "MINIMES", 120));
+                        db.Insert("Categories", new Categorie("Minime 1 (« -de 12 ans »)", "nés en 2008", "MINIMES", 130));
 
-                    db.Save("Categories", "IdCategorie", new Categorie("Poussin (« -de 9 ans »)", "Nés en 2011 et après", "POUSSINS", 160));
+                        db.Insert("Categories", new Categorie("Benjamin 2 (« -de 11 ans »)", "nés en 2009", "BENJAMINS", 140));
+                        db.Insert("Categories", new Categorie("Benjamin 1 (« -de 10 ans »)", "nés en 2010", "BENJAMINS", 150));
+
+                        db.Insert("Categories", new Categorie("Poussin (« -de 9 ans »)", "Nés en 2011 et après", "POUSSINS", 160));
+
+                        db.CompleteTransaction();
+                    }
+                    catch (Exception ex)
+                    {
+                        db.AbortTransaction();
+                        MessageBox.Show(ex.ToString());
+                    }
                 }
             }
         }
@@ -731,18 +763,30 @@ namespace Criterium_16_4
 
                 using (var db = new PetaPoco.Database("SqliteConnect"))
                 {
-                    db.Save("Divisions", "IdDivision", new Division("PRO A", "PRO A", "NATIONAL", 10));
-                    db.Save("Divisions", "IdDivision", new Division("PRO B", "PRO B", "NATIONAL", 20));
-                    db.Save("Divisions", "IdDivision", new Division("N1", "Nationale une", "NATIONAL", 30));
-                    db.Save("Divisions", "IdDivision", new Division("N2", "Nationale deux", "NATIONAL", 40));
-                    db.Save("Divisions", "IdDivision", new Division("N3", "Nationale trois", "NATIONAL", 50));
-                    db.Save("Divisions", "IdDivision", new Division("PN", "Pré-nationale", "REGIONAL", 60));
-                    db.Save("Divisions", "IdDivision", new Division("R1", "Régionale une", "REGIONAL", 70));
-                    db.Save("Divisions", "IdDivision", new Division("R2", "Régionale deux", "REGIONAL", 80));
-                    db.Save("Divisions", "IdDivision", new Division("R3", "Régionale trois", "REGIONAL", 90));
-                    db.Save("Divisions", "IdDivision", new Division("PR", "Pré-Régionale", "DEPARTEMENTAL", 100));
-                    db.Save("Divisions", "IdDivision", new Division("D1", "Départemental un", "DEPARTEMENTAL", 110));
-                    db.Save("Divisions", "IdDivision", new Division("D2", "Départemental deux", "DEPARTEMENTAL", 120));
+                    try
+                    {
+                        db.BeginTransaction();
+
+                        db.Insert("Divisions", new Division("PRO A", "PRO A", "NATIONAL", 10));
+                        db.Insert("Divisions", new Division("PRO B", "PRO B", "NATIONAL", 20));
+                        db.Insert("Divisions", new Division("N1", "Nationale une", "NATIONAL", 30));
+                        db.Insert("Divisions", new Division("N2", "Nationale deux", "NATIONAL", 40));
+                        db.Insert("Divisions", new Division("N3", "Nationale trois", "NATIONAL", 50));
+                        db.Insert("Divisions", new Division("PN", "Pré-nationale", "REGIONAL", 60));
+                        db.Insert("Divisions", new Division("R1", "Régionale une", "REGIONAL", 70));
+                        db.Insert("Divisions", new Division("R2", "Régionale deux", "REGIONAL", 80));
+                        db.Insert("Divisions", new Division("R3", "Régionale trois", "REGIONAL", 90));
+                        db.Insert("Divisions", new Division("PR", "Pré-Régionale", "DEPARTEMENTAL", 100));
+                        db.Insert("Divisions", new Division("D1", "Départemental un", "DEPARTEMENTAL", 110));
+                        db.Insert("Divisions", new Division("D2", "Départemental deux", "DEPARTEMENTAL", 120));
+
+                        db.CompleteTransaction();
+                    }
+                    catch (Exception ex)
+                    {
+                        db.AbortTransaction();
+                        MessageBox.Show(ex.ToString());
+                    }
                 }
             }
         }
@@ -755,15 +799,27 @@ namespace Criterium_16_4
 
                 using (var db = new PetaPoco.Database("SqliteConnect"))
                 {
-                    db.Save("Groupes", "IdGroupe", new Groupe("Un"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Deux"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Trois"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Quatre"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Cinq"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Six"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Sept"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Huit"));
-                    db.Save("Groupes", "IdGroupe", new Groupe("Neuf"));
+                    try
+                    { 
+                        db.BeginTransaction();
+
+                        db.Insert("Groupes", new Groupe("Un"));
+                        db.Insert("Groupes", new Groupe("Deux"));
+                        db.Insert("Groupes", new Groupe("Trois"));
+                        db.Insert("Groupes", new Groupe("Quatre"));
+                        db.Insert("Groupes", new Groupe("Cinq"));
+                        db.Insert("Groupes", new Groupe("Six"));
+                        db.Insert("Groupes", new Groupe("Sept"));
+                        db.Insert("Groupes", new Groupe("Huit"));
+                        db.Insert("Groupes", new Groupe("Neuf"));
+
+                        db.CompleteTransaction();
+                    }
+                    catch (Exception ex)
+                    {
+                        db.AbortTransaction();
+                        MessageBox.Show(ex.ToString());
+                    }
                 }
             }
         }
@@ -951,7 +1007,8 @@ namespace Criterium_16_4
                 {
                     using (var db = new PetaPoco.Database("SqliteConnect"))
                     {
-                        db.Execute(string.Format("DELETE Joueurs, CompetitionsLicences FROM Joueurs jo INNER JOIN CompetitionsLicences cl ON jo.Licence=cl.Licence WHERE cl = @0;", SingletonOutils.competition.IdCompetition));
+                        db.Execute("DELETE FROM Joueurs WHERE Licence IN ( SELECT Licence FROM CompetitionsLicences WHERE IdCompetition = @0 );", SingletonOutils.competition.IdCompetition );
+                        db.Execute("DELETE FROM CompetitionsLicences WHERE IdCompetition = @0;", SingletonOutils.competition.IdCompetition);
 
                         iNbr = db.ExecuteScalar<int>("SELECT COUNT(*) FROM Joueurs");
                         if (iNbr == 0)

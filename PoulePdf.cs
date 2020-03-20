@@ -1,13 +1,8 @@
 ﻿/*
- * Created by SharpDevelop.
  * User: CHAUTARD
  * Date: 28/11/2019
- * Time: 08:07
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using PdfSharp.Drawing;
@@ -60,7 +55,6 @@ namespace Criterium_16_4
         // Par défaut 4 joueurs par poule
         bool[] _bJoueur4 = { true, true, true, true };
         int _iPouleActive = 1;
-        //int _iPartie = 0;
 
         const int PASGAUCHE = 286;
         const int PASBAS = 394;
@@ -193,11 +187,10 @@ namespace Criterium_16_4
                             CreatePage(_pageArbitrage);
 
                         // 4 joueurs dans la poule
-                        int iNbr = pdfXY.ReadNbr();
                         string[] position;
                         string str2;
 
-                        for (int i = 1; i <= iNbr; i++)
+                        for (int i = 1; i <= pdfXY.NOMBRE; i++)
                         {
                             // Lecture du fichier INI
                             position = pdfXY.ReadInit(i);
@@ -261,11 +254,10 @@ namespace Criterium_16_4
                             CreatePage(_pageArbitrage);
 
                         // 4 joueurs dans la poule
-                        int iNbr = pdfXY.ReadNbr();
                         string[] position;
                         string str2;
 
-                        for (int i = 1; i <= iNbr; i++)
+                        for (int i = 1; i <= pdfXY.NOMBRE; i++)
                         {
                             // Lecture du fichier INI
                             position = pdfXY.ReadInit(i);
@@ -333,16 +325,26 @@ namespace Criterium_16_4
         private string GetValue(string str, int j1, int j2, int j3, int iPartieEditer)
         {
             Joueur joueur;
-            IniFile iniFile = new IniFile(SingletonOutils.FILEINI);
             TimeSpan tHeureDebut = new TimeSpan();
 
             switch (str)
             {
-                case "EPREUVE":                 
-                    return iniFile.ReadString("COMPETITION", "division");
+                case "EPREUVE":
+                    Division division;
+
+                    using (var db = new PetaPoco.Database("SqliteConnect"))
+                    {
+                        division = db.Single<Division>(SingletonOutils.competition.IdDivision);
+                    }
+                    return division.NomLong;
 
                 case "NIVEAU":
-                    return iniFile.ReadString("COMPETITION", "categorie");
+                    Categorie categorie;
+                    using (var db = new PetaPoco.Database("SqliteConnect"))
+                    {
+                        categorie = db.Single<Categorie>(SingletonOutils.competition.IdCategorie);
+                    }
+                    return categorie.Nom;
 
                 case "POULE":
                     return _iPouleActive.ToString();

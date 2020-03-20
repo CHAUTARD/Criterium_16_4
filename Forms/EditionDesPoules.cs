@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Criterium_16_4
@@ -30,21 +31,22 @@ namespace Criterium_16_4
 			//
 			// Add constructor code after the InitializeComponent() call.
 			//
-			this._sEpreuve = "XXXXXXX";
-			// @TODO
+			this._sEpreuve = SingletonOutils.competition.Commentaire ;
 			
 			this._dgvPoule = dgvPoule;
 
-			// Nom de la compétion
-			IniFile iniFile = new IniFile(SingletonOutils.FILEINI);
+			// Tables de la compétion
+			cbPoule1.Items.Add(SingletonOutils.competition.Table1);
+			cbPoule1.Items.Add(SingletonOutils.competition.Table2);
+			cbPoule1.Items.Add(SingletonOutils.competition.Table3);
+			cbPoule1.Items.Add(SingletonOutils.competition.Table4);
 
-			foreach(string str in new string[] {iniFile.ReadString("TABLE", "une"), iniFile.ReadString("TABLE", "deux"), iniFile.ReadString("TABLE", "trois"), iniFile.ReadString("TABLE", "quatre") })
+			foreach (Object item in cbPoule1.Items)
 			{
-				cbPoule1.Items.Add(str);
-				cbPoule2.Items.Add(str);
-				cbPoule3.Items.Add(str);
-				cbPoule4.Items.Add(str);
-			};
+				cbPoule2.Items.Add(item);
+				cbPoule3.Items.Add(item);
+				cbPoule4.Items.Add(item);
+			}
 
 			cbPoule1.SelectedIndex = 0;
 			cbPoule2.SelectedIndex = 1;

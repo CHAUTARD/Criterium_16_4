@@ -253,8 +253,8 @@ namespace Criterium_16_4
 		{
 			using (var db = new PetaPoco.Database("SqliteConnect"))
 			{
-				db.Execute( string.Format("DELETE FROM {0};", sTableName));
-				db.Execute( string.Format("DELETE FROM sqlite_sequence WHERE name = '{0}'", sTableName));
+				db.Execute( "DELETE FROM @0;", sTableName);
+				db.Execute( "DELETE FROM sqlite_sequence WHERE name = @0", sTableName);
 			}
 		}
 
@@ -264,7 +264,7 @@ namespace Criterium_16_4
 			{
 				using (var db = new PetaPoco.Database("SqliteConnect"))
 				{
-					return db.Single<Joueur>(iLicence);
+					return db.SingleOrDefault<Joueur>(iLicence);
 				}
 			}
 			return null;

@@ -17,6 +17,9 @@ namespace Criterium_16_4
         {
             InitializeComponent();
 
+            // Titre de la fenétre
+            Text = "Compétition Tennis de Table : 16 joueurs en 4 poules. - Version : " + System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+
             try
             {
                 using (var db = new PetaPoco.Database("SqliteConnect"))
